@@ -3,4 +3,5 @@
     var rightDesigner = require("/_Modeling/js/appform/right-designer.js?a=12");
     rightDesigner.setData(Datas);
     rightDesigner.init(true);
+    alert("aaa");
 });
