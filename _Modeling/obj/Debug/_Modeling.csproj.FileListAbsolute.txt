@@ -1,0 +1,5 @@
+D:\3.MyProject\02 项目\07 其它开发案例\老平台建模\Trunk-作业分支\Map\map\bin\_Modeling.dll
+D:\3.MyProject\02 项目\07 其它开发案例\老平台建模\Trunk-作业分支\Map\map\_Modeling\obj\Debug\_Modeling.dll
+D:\3.MyProject\02 项目\07 其它开发案例\老平台建模\Trunk-作业分支\Map\map\_Modeling\obj\Debug\_Modeling.pdb
+D:\3.MyProject\02 项目\07 其它开发案例\老平台建模\Trunk-作业分支\Map\map\bin\_Modeling.pdb
+D:\3.MyProject\02 项目\07 其它开发案例\老平台建模\Trunk-作业分支\Map\map\_Modeling\obj\Debug\_Modeling.csprojResolveAssemblyReference.cache

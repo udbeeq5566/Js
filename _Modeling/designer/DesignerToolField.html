@@ -1,0 +1,739 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="../css/AppFormModeling.css" rel="stylesheet" />-->
+    
+    <style>
+        #menuField {
+            height: 800px;
+            overflow: scroll;
+        }
+
+        .col-md-8, .col-md-4 {
+            padding: 0px;
+        }
+
+        .col-xs-5 {
+            padding-left: 0px;
+        }
+
+
+        li {
+            cursor: move;
+        }
+
+        /*逻辑控制type类型 默认div不显示*/
+        .div-control {
+            display: none;
+        }
+    </style>
+    
+
+    <script type="text/javascript">
+        //$(function () {
+
+        //    /*
+        //      构建所有字段列表加载容器中
+        //    */
+        //    $("#menuField").html(
+        //        $.map(Datas.Columns, function (item) {
+        //            return String.format("<li ColumnName='{ColumnName}' ColumnType='{ColumnType}' class='list-group-item'>{ColumnName}({ColumnName})</li>", item);
+        //        }).join(' ')
+        //    );
+
+        //    /*
+        //     测试 根据字段 放置容器中
+        //   */
+        //    $("#menuField li").draggable({
+        //        appendTo: "body",
+        //        helper: "clone",
+        //        cursor: "crosshair"
+        //    });
+        //    $("#menuField").sortable({
+        //        items: "li:not(.placeholder)",
+        //        sort: function () {
+        //            // 获取由 droppable 与 sortable 交互而加入的条目
+        //            // 使用 connectWithSortable 可以解决这个问题，但不允许您自定义 active/hoverClass 选项
+        //            $(this).removeClass("ui-state-default");
+        //        }
+        //    });;
+        //    $("#droppableMenuField").droppable({
+        //        activeClass: "ui-state-default",
+        //        hoverClass: "ui-state-hover",
+        //        accept: ":not(.ui-sortable-helper)",
+        //        drop: function (event, ui) {
+        //            $(this).find(".placeholder").remove();
+        //            var drag = ui.draggable;
+        //            $("<li class='list-group-item'></li>").text(drag.text()).appendTo(this);
+        //            //放置成功后移除
+        //            drag.remove();
+
+        //        }
+        //    }).sortable({
+        //        items: "li:not(.placeholder)",
+        //        sort: function () {
+        //            // 获取由 droppable 与 sortable 交互而加入的条目
+        //            // 使用 connectWithSortable 可以解决这个问题，但不允许您自定义 active/hoverClass 选项
+        //            $(this).removeClass("ui-state-default");
+        //        }
+        //    });
+
+
+        //    /*
+        //      构建所有字段列表加载From表单中
+        //    */
+        //    var $tablehtml = "";
+
+        //    $.map(Datas.form.tab[1].section, function (ems) {
+
+        //        $tablehtml = $(String.format("<table id='{0}' class='table table-bordered'><tr><th colspan='2' class='active'>{0}</th></tr></table>", ems["@title"]));
+
+        //        var trhtml = $("<tr></tr>");
+        //        $.map(ems.item, function (em) {
+
+        //            //两个元素为一组
+        //            if (trhtml.children().length == 2) {
+        //                $tablehtml.eq(0).append(trhtml);
+        //                trhtml = $("<tr></tr>");
+        //            }
+        //            trhtml.eq(0).append(String.format("<td pkid='{0}' >{1}</td>", em["@pkid"], em["@title"]));
+        //        });
+        //        $("#main").append($tablehtml);
+        //    });
+
+        //    //注册字段托动事件
+        //    $("#main td").droppable({
+        //        activeClass: "ui-state-default",
+        //        hoverClass: "ui-state-hover",
+        //        accept: ":not(.ui-sortable-helper)",
+        //        drop: function (event, ui) {
+        //            //$(this).find(".placeholder").remove();
+        //            //ui 来源对象
+        //            var drag = ui.draggable;
+        //            //this 目标对象
+        //            $(this).text(drag.text());
+        //            //放置成功后移除
+        //            drag.remove();
+        //        }
+        //    });
+
+        //    //自动显示
+        //    //$('#myModal').modal('show');
+
+        //    //监听show事件
+        //    $('#myModal').on('show.bs.modal',
+        //        function (event) {
+        //            //var button = $(event.relatedTarget) // Button that triggered the modal
+        //            //var recipient = button.data('whatever') // Extract info from data-* attributes
+        //            //// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        //            //// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        //            //var modal = $(this)
+        //            //modal.find('.modal-title').text('New message to ' + recipient)
+        //            //modal.find('.modal-body input').val(recipient)
+        //        }
+        //    );
+
+        //    //定义Move移动事件处理
+        //    $('div.modal-header').mousedown(
+        //            function (event) {
+        //                var isMove = true; //移动标识
+        //                var abs_x = event.pageX - $('div#divModal').offset().left;
+        //                var abs_y = event.pageY - $('div#divModal').offset().top;
+        //                //alert(abs_x + "   " + abs_y);
+        //                $(document).mousemove(function (event) {
+        //                    if (isMove) {
+        //                        var obj = $('div#divModal');
+        //                        //obj.css({ 'left': event.pageX - abs_x, 'top': event.pageY - abs_y });
+        //                        obj.offset({ top: event.pageY - abs_y, left: event.pageX - abs_x });
+        //                    }
+        //                }
+        //                ).mouseup(
+        //                        function () {
+        //                            isMove = false;
+        //                        }
+        //                );
+        //     });
+
+        //    //绑定下拉框change事件，当下来框改变时调用 SelectChange()方法
+        //    $("#selectOpts").change(function () {
+        //        //获取下拉框选中项的text属性值
+        //        var sel = $(this).find("option:selected");
+        //        //alert(sel.text());
+        //        $("#txtSelectText").val(sel.text());
+        //        $("#txtSelectValue").val(sel.val());
+
+        //    });
+
+        //    //注册下拉框select Add button click事件
+        //    $("#btnSelectAdd").click(function () {
+        //        var sel = $("#selectOpts");
+
+        //        var option = {
+        //            text: $("#txtSelectText").val(),
+        //            value: $("#txtSelectValue").val()
+        //        };
+
+        //        //不支持Jquery text查找 
+        //        var obj = selectOption(option);
+        //        if (!obj) {
+        //            sel.append(String.format("<option value='{value}'>{text}</option>", option));
+        //            selectRefresh("last");
+        //        }
+        //    });
+
+        //    //注册下拉框select Del button click事件
+        //    $("#btnSelectDel").click(function () {
+        //        var option = {
+        //            text: $("#txtSelectText").val(),
+        //            value: $("#txtSelectValue").val()
+        //        };
+
+        //        var obj = selectOption(option);
+        //        if (obj)
+        //        {
+        //            obj.remove();
+        //            selectRefresh();
+        //        }
+        //    });
+
+        //    //$.each({ name: "John", lang: "JS" }, function (key, value) {
+        //    //    alert("Name: " + i + ", Value: " + n);
+        //    //});
+
+        //    // 不支持Jquery text查找 内部查找函数 提供下拉框select 
+        //    var selectOption = function (option) {
+        //        return $.map($("#selectOpts option"),function (o) {
+        //            var op = $(o);
+        //            if (op.text() === option.text) {
+        //                return op;
+        //            }
+        //        })[0];
+        //    }
+
+        //    //内部刷新函数 提供下拉框select 刷新
+        //    var selectRefresh = function (order) {
+        //        order = order || "first";
+        //        $("#txtSelectText").val("");
+        //        $("#txtSelectValue").val("");
+        //        $(String.format("#selectOpts option:{0}",order)).attr("selected", true).change();
+        //    }
+
+
+        //    //收集------------------json进行提交
+        //    $("#btnSubmit").click(function () {
+        //        //alert("正在更新中....");
+
+        //        //进行收集
+        //        var id = $("#formInfo").attr("pkid");
+        //        var flag = true; //jquery flag break
+        //        $.each(Datas.form.tab[1].section, function (key, ems) {
+
+        //            $.each(ems.item, function (key,em) {
+        //                if (em["@pkid"] == id) {
+
+        //                    //属性title
+        //                    em["@title"] = $("#txtTitle").val();
+
+        //                    //字段必填项
+        //                    em["@req"] = $("#divFieldRequired input:checked").val();
+
+        //                    //新增默认值
+        //                    em["@defaultvalue"] = $("#txtDefaultValue").val();
+
+        //                    //修改默认值
+        //                    em["@editvalue"] = $("#txtEditValue").val();
+
+        //                    //长度
+        //                    em.attribute["@maxlength"] = $("#numMaxText").val();
+
+
+        //                    //字段必填项 
+        //                    var apiVal = $("#divRadioReadOnly input:checked").val();
+        //                    /*
+        //                    id="radioReadOnly1" checked="checked" value="1"> 不限制
+        //                    id="radioReadOnly2"  value="2"> 新增只读
+        //                    id="radioReadOnly3" value="3"> 修改只读
+        //                    id="radioReadOnly4" value="4"> 全部只读
+        //                    */
+
+        //                    //默认值1
+        //                    em["@createapi"] = 1;
+        //                    em["@updateapi"] = 1;
+
+        //                    if (apiVal == 2)
+        //                    {
+        //                        em["@createapi"]=0;
+        //                    }
+        //                    else if (apiVal == 3)
+        //                    {
+        //                        em["@updateapi"] = 0;
+        //                    }
+        //                    else if(apiVal == 4){
+        //                        em["@createapi"] = 0;
+        //                        em["@updateapi"] = 0;
+        //                    }
+        //                    else
+        //                    {
+        //                        em["@createapi"] = 1;
+        //                        em["@updateapi"] = 1;
+        //                    }
+
+        //                    /*
+        //                     type类型控制显示
+        //                    */
+        //                    var type = em["@type"];
+        //                    if (type === "number") {
+        //                        em["@format"] = $("#txtformat").val();
+        //                        em.attribute["@min"] = $("#numMin").val();
+        //                        em.attribute["@max"] = $("#numMax").val();
+        //                    }
+        //                    else if (type === "datetime")
+        //                    {
+        //                        em["@time"] = $("#selectTime").val();
+        //                    }
+        //                    else if (type === "radio" || type === "select")
+        //                    {
+        //                        //add option {} 
+        //                        em["option"] = $.map($("#selectOpts option"), function (o) {
+        //                            return {
+        //                                "@value": $(o).val(),
+        //                                "#text": $(o).text()
+        //                            };
+        //                        });
+        //                    }
+
+        //                    flag = false;
+        //                    //break
+        //                    return flag;
+        //                }
+        //            });
+
+        //            return flag;
+        //        });
+
+
+        //        //log 收集 Ajax请求后台处理 
+        //        console.log(Datas.form.tab[1].section);
+        //        console.log("成功！");
+        //    });
+
+
+        //    //加载------------字段Model模态窗体中
+        //    $("#main td").dblclick(function () {
+        //        var id = $(this).attr("pkid");
+        //        var flag = true; //jquery flag break
+        //        $.each(Datas.form.tab[1].section, function (key, ems) {
+
+        //            $.each(ems.item, function (key,em) {
+        //                if (em["@pkid"] == id) {
+                        
+        //                    //alert(em["@title"]);
+        //                    $("#txtTitle").val(em["@title"]);
+        //                    $("#txtInfo").val(em["@title"]);
+        //                    $("#formInfo").attr("pkid", id);
+
+                            
+        //                    //字段必填项  测试完成
+        //                    //req  Integer  是否必填项。0 为非必填，1 为必填，2 为建议填写，默认值为 0 。   
+        //                    var req = em["@req"] === undefined ? 0 : em["@req"];
+        //                    $("#divFieldRequired input[name='inlineRadioOptions']").each(function () {
+        //                        var v = $(this).val();
+        //                        //$(this).removeAttr("checked","aaaa");
+        //                        if (v == req)
+        //                        {
+        //                            //alert(req);
+        //                            $(this).attr("checked", "checked");
+        //                            return;
+        //                        }
+        //                    });
+
+        //                    //新增默认值 测试完成
+        //                    //"@defaultvalue": "外部项目成本库", defaultvalue  String  新增记录时控件的默认值。 
+        //                    $("#txtDefaultValue").val(em["@defaultvalue"]);
+
+        //                    //修改默认值 测试完成
+        //                    //"@editvalue": "外部项目成本库", defaultvalue  String  新增记录时控件的默认值。 
+        //                    $("#txtEditValue").val(em["@editvalue"]);
+                            
+
+        //                    //长度 测试完成
+        //                    //长度 未有maxlength属性 attribute maxlength="50"
+        //                    if (em.attribute && em.attribute["@maxlength"]){
+        //                        $("#numMaxText").val(em.attribute["@maxlength"])
+        //                    }
+
+
+        //                    //字段必填项  测试完成
+        //                    //createapi updateapi    
+        //                    //createapi  Integer  新增记录时，控件是否可填。0 为只读，1 为可填，默认值为 1。  
+        //                    //updateapi  Integer  修改记录时，控件是否可填。0 为只读，1 为可填，默认值为 1。  
+        //                    /*
+        //                    id="radioReadOnly1" checked="checked" value="1"> 不限制
+        //                    id="radioReadOnly2"  value="2"> 新增只读
+        //                    id="radioReadOnly3" value="3"> 修改只读
+        //                    id="radioReadOnly4" value="4"> 全部只读
+        //                    */
+        //                    var createapi = em["@createapi"] === undefined ? 1 : em["@createapi"];
+        //                    var updateapi = em["@updateapi"] === undefined ? 1 : em["@updateapi"];
+        //                    if (createapi == 0 && updateapi == 0) {
+        //                        //全部只读
+        //                        $("#radioReadOnly4").attr("checked", "checked");
+        //                    }
+        //                    else if (createapi == 0 && updateapi == 1) {
+        //                        //新增只读
+        //                        $("#radioReadOnly2").attr("checked", "checked");
+        //                    }
+        //                    else if (createapi == 1 && updateapi == 0) {
+        //                        //修改只读
+        //                        $("#radioReadOnly3").attr("checked", "checked");
+        //                    }
+        //                    else {
+        //                        //不限制
+        //                        $("#radioReadOnly1").attr("checked", "checked");
+        //                    }
+
+
+        //                    /*
+        //                     type类型控制显示
+        //                    */
+        //                    var type = em["@type"];
+        //                    $("select#selectFieldType").val(type);
+        //                    //隐藏所有div控件
+        //                    $("div.div-control").hide();
+        //                    //显示所属type控件值
+        //                    $(String.format("#div{0}Type", type)).show();
+
+        //                    //共用Select Option值
+        //                    if (type === "radio") {
+        //                        $(String.format("#div{0}Type", "select")).show();
+        //                    }
+
+
+        //                    //number
+        //                    $("#txtformat").val(em["@format"]);
+        //                    if (em.attribute && em.attribute["@min"]) {
+        //                        $("#numMin").val(em.attribute["@min"])
+        //                    }
+        //                    if (em.attribute && em.attribute["@max"]) {
+        //                        $("#numMax").val(em.attribute["@max"])
+        //                    }
+
+        //                    //datetime
+        //                    $("#selectTime").val(em["@time"]);
+
+
+        //                    //select
+        //                    //下拉选项 测试完成 
+        //                    if (em["option"]) {
+        //                        var sel = $("#selectOpts");
+        //                        sel.empty();
+        //                        var options = "";
+        //                        $.map(em.option, function (o) {
+        //                            options += String.format("<option value='{0}'>{1}</option>",o["@value"],o["#text"]);
+        //                        });
+        //                        sel.append(options);
+        //                        //设置下拉框index属性为0的选项 选中触发change
+        //                        selectRefresh();
+
+        //                    }
+                            
+        //                    //显示层控制
+        //                    $('#myModal').modal('show');
+        //                    flag = false;
+        //                    return flag;
+        //                }
+        //            });
+
+        //            $("#main").append($tablehtml);
+        //            return flag;
+        //        });
+        //    });
+
+        //});
+
+    </script>
+
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="page-header">
+            <h1>
+                AppForm建模页面
+                <small>v1.0</small>
+            </h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" style="border: solid 1px blue;">
+                <div id="divAppForm">
+
+                </div>
+            </div>
+            <div class="col-md-4" style="border: solid 1px red;">
+                <div>
+                    <a href="#" class="list-group-item active">
+                        可用字段列表13123
+                    </a>
+                    <ul class="list-group" id="menuField">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog  modal-lg" id="divModal">
+                    <div class="modal-content">
+                        <div class="modal-header" style="cursor:move">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                模态框（Modal）编辑字段
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <form class="form-horizontal" id="formInfo">
+                                <div class="form-group">
+                                    <label for="txtTitle" class="col-sm-2 control-label">字段名称 *</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="txtTitle" placeholder="字段名称 *">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtInfo" class="col-sm-2 control-label">提示信息</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="txtInfo" placeholder="提示信息">
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <label for="selectFieldType" class="col-sm-2 control-label">字段类型</label>
+                                    <div class="col-sm-10">
+                                        <select id="selectFieldType" disabled="disabled" class="form-control">
+                                            <option value="text">单行文本框</option>
+                                            <option value="memo">多行文本框</option>
+                                            <option value="password">密码录入框</option>
+                                            <option value="number">数字录入框</option>
+                                            <option value="datetime">日期录入框</option>
+                                            <option value="radio">单选选择框</option>
+                                            <option value="select">下拉选择框</option>
+                                            <option value="lookup">查找选择框</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">必填级别</label>
+                                    <div class="col-sm-10" id="divFieldRequired">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="fieldRequired0"  value="0"> 可选
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="fieldRequired2" value="2"> 业务建议
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="fieldRequired1"  value="1"> 业务必填
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="divRadioReadOnly " class="col-sm-2 control-label">只读模式</label>
+                                    <div class="col-sm-10" id="divRadioReadOnly">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions1" id="radioReadOnly1" checked="checked" value="1"> 不限制
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions1" id="radioReadOnly2" value="2"> 新增只读
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions1" id="radioReadOnly3" value="3"> 修改只读
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions1" id="radioReadOnly4" value="4"> 全部只读
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtDefaultValue" class="col-sm-2 control-label">新增默认值</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="txtDefaultValue" placeholder="新增默认值">
+                                    </div>
+                                    <label for="txtEditValue" class="col-sm-2 control-label">修改默认值</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="txtEditValue" placeholder="修改默认值">
+                                    </div>
+                                </div>
+                                <!-- type="number" 类型 -->
+                                <div id="divnumberType" class="div-control">
+                                    <div class="form-group">
+                                        <label for="numMin" class="col-sm-2 control-label">最小值</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" id="numMin" class="form-control" placeholder="最小值">
+                                        </div>
+                                        <label for="numMax" class="col-sm-2 control-label">最大值</label>
+                                        <div class="col-sm-3">
+                                            <input type="number" id="numMax" class="form-control" placeholder="最大值">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtformat" class="col-sm-2 control-label">数字显示格式</label>
+                                        <div class="col-sm-10">
+
+                                            <input type="text" id="txtformat" class="form-control" placeholder="示例：#,##0.00">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- type="datetime" 类型 -->
+                                <div id="divdatetimeType" class="div-control">
+                                    <div class="form-group">
+                                        <label for="selectTime" class="col-sm-2 control-label">时间支持模式</label>
+                                        <div class="col-sm-10">
+                                            <select id="selectTime" class="form-control">
+                                                <option value="0">格式:［年-月-日］</option>
+                                                <option value="1">格式:［年-月-日 时:分］</option>
+                                                <option value="2">格式:［年-月-日 时:分:秒］</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- type="radio" 类型 动态备选项内容 -->
+                                <!--<div id="divradioType">
+
+                                    <div class="form-group">
+                                        <label for="txtformat" class="col-sm-2 control-label">单选项内容</label>
+                                        <div class="col-sm-10">
+
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 是
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 否
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                                <!-- type="select" 类型 动态备选项内容 -->
+                                <!--<div id="divradioType" class="div-control">
+                                    <div class="form-group">
+                                        <label for="selectOpts" class="col-sm-2 control-label">动态备选项内容</label>
+                                        <div class="col-sm-10">
+
+                                            <select id="selectOpts" class="form-control"></select>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-inline form-group">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-1">
+                                            <p class="form-control-static">Text:</p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <input type="text" id="txtSelectText" class="form-control" placeholder="Text">
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p class="form-control-static">Value:</p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <input type="text" id="txtSelectValue" class="form-control" placeholder="Value">
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                                <!-- type="select" 与radio连体 类型 动态备选项内容 -->
+                                <div id="divselectType" class="div-control">
+                                    <div class="form-group">
+                                        <label for="selectOpts" class="col-sm-2 control-label">备选项内容</label>
+                                        <div class="col-sm-10">
+
+                                            <select id="selectOpts" class="form-control">
+                                               
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-inline form-group">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-1">
+                                            <p class="form-control-static">Text:</p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <input type="text" id="txtSelectText" class="form-control" placeholder="Text">
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p class="form-control-static">Value:</p>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <input type="text" id="txtSelectValue" class="form-control" placeholder="Value">
+                                        </div>
+                                        <button type="button" id="btnSelectAdd" class="btn btn-info">添加</button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" id="btnSelectDel" class="btn btn-info">删除</button>
+                                    </div>
+                                </div>
+
+                                <!-- div 控制divMaxlen显示 -->
+                                <div class="form-group" id="divMaxLen">
+                                    <label for="numMaxText" class="col-sm-2 control-label">最大文本长度</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" id="numMaxText" class="form-control" placeholder="最大文本长度">
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">
+                                关闭
+                            </button>
+                            <button type="button" id="btnSubmit" class="btn btn-primary">
+                                提交更改
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        </div>
+    </div>
+
+
+    <script src="/_Modeling/lib/seajs/sea.js"></script>
+    <script type="text/javascript">
+        seajs.config({
+            base: '/_Modeling/lib', //基础路径
+            alias: {
+                "jquery": "jquery/jquery-1.12.1.min",
+                "jqueryUI": "jquery/jquery-ui.min",
+                "format": "util/format",
+                "bootstrap": "bootstrap/bootstrap.min"
+            },
+            map: [
+                [/^(.*\/js\/main\/.*\.(?:css|js))(?:.*)$/i, '$1?20140918']
+            ],
+            preload: ['jquery'] //预先加载
+        });
+        seajs.use("/_Modeling/js/appform/TestRight-designer.js?_id=7410258");
+
+    </script>
+</body>
+</html>

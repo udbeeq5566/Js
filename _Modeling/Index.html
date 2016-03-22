@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="en" />
+
+    <title>Index Layout布局</title>
+
+    <!-- Basic layout styles -->
+    <link rel="stylesheet" type="text/css" href="/css/layout-default.css" />
+
+    <script type="text/javascript" src="/lib/Jquery.layout/jquery-latest.js"></script>
+    <script type="text/javascript" src="/lib/Jquery.layout/jquery-ui-latest.js"></script>
+    <script type="text/javascript" src="/lib/Jquery.layout/jquery.layout-latest.js"></script>
+
+    <script type="text/javascript">
+        /*
+         *	NOTE: For best code readability, view this with a fixed-space font and tabs equal to 4-chars
+         */
+
+        function loadIframePage(pane, $Pane) {
+            if (!$Pane) $Pane = $('.ui-layout-' + pane);
+            var $Iframe = $Pane.prop('tagName') == 'IFRAME' ? $Pane : $Pane.find('IFRAME:first');
+            if (!$Iframe.length) return; // no iframe
+            var src = $Iframe.attr('src') , page = $Iframe.attr('longdesc');
+            if (page && src != page) $Iframe.attr('src', page);
+        }
+
+        var myLayout;
+
+        $(document).ready(function () {
+            myLayout = $("body").layout({
+                minSize: 25
+            , north__size: .75
+            , south__size: .25
+            , east__size: '18%'
+            , center__minHeight: 200
+            , center__minWidth: '30%'
+            , spacing_closed: 16
+            , initClosed: true
+            , maskContents: true // IMPORTANT - enable iframe masking - all panes in this case
+            , onopen: loadIframePage // same callback for ALL borderPanes
+            , east__resizeWhileDragging: true	// slow with a page full of iframes!
+
+                /*
+                ,	west__initClosed:	false
+                ,	south__initClosed:	false
+                ,	west__maskIframesOnResize: false
+                */
+            });
+            //loadIframePage('west');
+        });
+
+    </script>
+
+</head>
+<body>
+
+        <h3>Loading...</h3>
+        <!-- IFRAME as layout-pane -->
+        <iframe class="ui-layout-center" src="http://www.baidu.com" frameborder="0" scrolling="auto"></iframe>
+
+        <!-- IFRAME as layout-pane -->
+        <iframe class="ui-layout-east" src="/designer/DesignerToolField.html" frameborder="0" scrolling="auto"></iframe>
+
+</body>
+
+</html>

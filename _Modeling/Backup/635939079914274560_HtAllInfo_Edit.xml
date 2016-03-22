@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<page funcid="02010404">
+  <controls>
+    <control id="appFormMenu">
+      <menus>
+        <menu title="文件" id="m1">
+          <menuitem id="mClose" title="关闭" action="window.close()" />
+        </menu>
+        <menu title="帮助">
+          <menuitem title="帮助" action="window.document.fireEvent('onhelp');">
+          </menuitem>
+          <menuitem title="关于明源地产ERP" action="openAbout();">
+          </menuitem>
+        </menu>
+      </menus>
+      <shortcuts>
+        <shortcut id="scClose" title="关闭" action="window.close()" icon="/images/Close_16_blue.gif" />
+      </shortcuts>
+    </control>
+    <control id="appNavBar">
+      <nav>
+        <navitem title="基本信息" icon="/cbgl/images/MainInfocb_16_wihte.gif" num="0" />
+        <navitem title="材料信息" icon="/cbgl/images/MaterialListcb_16_wihte.gif" url="/cbgl/HTZX/HtAllInfo_Edit_Clxx.aspx" display="false" num="1">
+          <params>
+            <param name="mode" value="3" />
+            <param name="ContractGUID" value="appForm.oid.value" />
+            <param name="HtKind" value="appForm.appForm_HtKind.value" />
+          </params>
+        </navitem>
+        <navitem title="合同变更" icon="/cbgl/images/DocuModifycb_16_wihte.gif" url="/cbgl/HTZX/HtAllInfo_Edit_HtAlter.aspx" display="false" num="2">
+          <params>
+            <param name="mode" value="3" />
+            <param name="ContractGUID" value="appForm.oid.value" />
+            <param name="USE_URL_BUGUID" value="__USE_URL_BUGUID.value" />
+            <param name="URL_BUGUID" value="__URL_BUGUID.value" />
+          </params>
+        </navitem>
+        <navitem title="执行单" icon="/cbgl/images/PactAnalysecb_16_wihte.gif" url="/FYGL/FKSP/Execution_HT.aspx" display="false" num="7">
+          <params>
+            <param name="mode" value="3" />
+            <param name="oid" value="appForm.oid.value" />
+            <param name="USE_URL_BUGUID" value="__USE_URL_BUGUID.value" />
+            <param name="URL_BUGUID" value="__URL_BUGUID.value" />
+          </params>
+        </navitem>
+        <navitem title="付款信息" icon="/cbgl/images/PayMoninfocb_16_wihte.gif" url="/cbgl/HTZX/HtAllInfo_Edit_Fkxx.aspx" display="false" num="3">
+          <params>
+            <param name="mode" value="3" />
+            <param name="ContractGUID" value="appForm.oid.value" />
+            <param name="HtClass" value="appForm.HtClass.value" />
+            <param name="USE_URL_BUGUID" value="__USE_URL_BUGUID.value" />
+            <param name="URL_BUGUID" value="__URL_BUGUID.value" />
+          </params>
+        </navitem>
+        <navitem title="合同结算" icon="/cbgl/images/PactFootcb_16_wihte.gif" url="/cbgl/HTZX/HtAllInfo_Edit_HtBalance.aspx" display="false" num="4">
+          <params>
+            <param name="mode" value="3" />
+            <param name="ContractGUID" value="appForm.oid.value" />
+            <param name="USE_URL_BUGUID" value="__USE_URL_BUGUID.value" />
+            <param name="URL_BUGUID" value="__URL_BUGUID.value" />
+          </params>
+        </navitem>
+        <navitem title="履约评估" icon="/cbgl/images/PactEvaluatecb_16_wihte.gif" url="/cbgl/HTZX/HtAllInfo_Edit_Htpg.aspx" display="false" num="5">
+          <params>
+            <param name="mode" value="3" />
+            <param name="oid" value="appForm.oid.value" />
+            <param name="USE_URL_BUGUID" value="__USE_URL_BUGUID.value" />
+            <param name="URL_BUGUID" value="__URL_BUGUID.value" />
+          </params>
+        </navitem>
+        <navitem title="合同分析" icon="/cbgl/images/PactAnalysecb_16_wihte.gif" url="/cbgl/HTZX/HtAllInfo_Edit_Htfx.aspx" display="false" num="6">
+          <params>
+            <param name="mode" value="1" />
+            <param name="oid" value="appForm.oid.value" />
+            <param name="USE_URL_BUGUID" value="__USE_URL_BUGUID.value" />
+            <param name="URL_BUGUID" value="__URL_BUGUID.value" />
+          </params>
+        </navitem>
+      </nav>
+    </control>
+    <control id="appForm">
+      <datasource entity="cb_Contract" keyname="ContractGUID">
+        <sql>
+                  SELECT ContractGUID,BUGUID,HtTypeCode,HtKind,ContractCode,ContractName,HtClass,SignMode,CostProperty,DeptGUID,Jbr,SignDate,JfCorporation,YfCorporation,BfCorporation,HtProperty,IfDdhs,MasterContractGUID,TotalAmount,BjcbAmount,ItemAmount,HtAmount,ItemDtAmount,HtycAmount,JsState,ZjsAmount,JsAmount,JsBxAmount,JsOtherDeduct,JsItemDeduct,LocaleAlterAmount,DesignAlterAmount,OtherAlterAmount,BalanceAdjustAmount,SumALterAmount,SumYfAmount,SumScheduleAmount,SumFactAmount,ConfirmJhfkAmount,IfConfirmFkPlan,SumPayAmount,LandSource,LandUseLimit,BuildArea,LandProperty,LandUse,LandRemarks,BeginDate,EndDate,WorkPeriod,BxAmount,BxLimit,PerformBail,PerformRemarks,TechnicRemarks,RewardRemarks,BreachRemarks,TermRemarks,ApproveState,ApproveDate,ApprovedBy,CfMode,YcfAmount,HtCfState,AlterCfState,FactCfAmount,FactCfState,PayCfState,ItemCfAmount,ItemCfState,HtycCfAmount,HtycCfState,FinanceHsxmCode,FinanceHsxmName,ApproveLog,ProcessStatusContract,TacticProtocolGUID,CgPlanGUID,JfProviderGUID,YfProviderGUID,BfProviderGUID,IsJtContract,Bz,Rate,SumScheduleAmount_Bz,SumPayAmount_Bz,SumAlterAmount_Bz,SumYfAmount_Bz,JsAmount_Bz,ZjsAmount_Bz,HtAmount_Bz,JsOtherDeduct_Bz,JbrGUID,ProjType,JfProviderName,YfProviderName,BfProviderName,ContractCodeFormat,UseStockInfo,ApproveStateFlag,HtCfStateShow,UseCostInfo,UseCostColor,IsLock,HtTypeName,HtTypeGUID,JbDeptName,JbDeptCode,MasterContractCode,MasterContractName,BUName,CgPlanName,TacticProtocolname,CurrencyName,ProjCode,ProjectCode,ProjName,SchedulePayRate,ProjectPlanAffect,HsCfState,DeptUseInfo,ContractBound,PayMode,QualityRequest,BXAssumpsit,'' as BM,'HT' as ContractType,'合同登记' as DocType, '' as ProjGUIDList,ProjName as ProjectNameList,ProjCode as ProjectCodeList,isUseYgAmount,IsFyControl
+                  FROM vcb_Contract WHERE (1=1)
+                </sql>
+      </datasource>
+      <form>
+        <tab title="基本资料">
+          <section title="合同信息" showtitle="true" showbar="true" cols="2" titlewidth="110" secid="Section1">
+            <item type="blank" title="AppFormBlank1" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="text" field="JfCorporation" title="签字人" createapi="1" updateapi="1">
+              <attribute maxlength="" />
+            </item>
+            <item type="blank" title="AppFormBlank3" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="blank" title="AppFormBlank4" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="lookup" title="甲方单位" field="JfProviderGUID" textfield="JfProviderName" icon="/_imgs/ico_16_9.gif" detailpage="/cgztb/provider/Provider_Edit.aspx?mode=3&amp;funcid=02010301&amp;oid=" defaultvalue="" defaulttext="" lookupstyle="single" lookupclass="lionel" lookupbrowse="0" lookupcustom="" features="dialogWidth:700px;dialogHeight:500px;resizable:yes;center:yes;status:no;help:no;scroll:no;" onbeforeselect="beforeSelectProvider(this,'jf')" onafterselect="afterSelectProvider(appForm.JfCorporation)" onclick="openProvider();event.returnValue=false;" />
+            <item type="blank" title="AppFormBlank6" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="blank" title="AppFormBlank7" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="blank" title="AppFormBlank8" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="blank" title="AppFormBlank9" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="text" field="YfCorporation" title="签字人" createapi="1" updateapi="1">
+              <attribute maxlength="" />
+            </item>
+            <item type="lookup" title="乙方单位" field="YfProviderGUID" textfield="YfProviderName" icon="/_imgs/ico_16_9.gif" detailpage="/cgztb/provider/Provider_Edit.aspx?mode=3&amp;funcid=02010301&amp;oid=" defaultvalue="" defaulttext="" lookupstyle="single" lookupclass="lionel" lookupbrowse="0" lookupcustom="/cgztb/pub/SelectProvider.aspx" features="dialogWidth:700px;dialogHeight:500px;resizable:yes;center:yes;status:no;help:no;scroll:no;" onbeforeselect="beforeSelectProvider(this,'yf')" onafterselect="afterSelectProvider(appForm.YfCorporation)" onclick="openProvider();event.returnValue=false;" />
+            <item type="blank" title="AppFormBlank12" colspan="1">
+              <html>补位单元格</html>
+            </item>
+            <item type="lookup" title="丙方单位" field="BfProviderGUID" textfield="BfProviderName" icon="/_imgs/ico_16_9.gif" detailpage="/cgztb/provider/Provider_Edit.aspx?mode=3&amp;funcid=02010301&amp;oid=" defaultvalue="" defaulttext="" lookupstyle="single" lookupclass="lionel" lookupbrowse="0" lookupcustom="/cgztb/pub/SelectProvider.aspx" features="dialogWidth:700px;dialogHeight:500px;resizable:yes;center:yes;status:no;help:no;scroll:no;" onbeforeselect="beforeSelectProvider(this,'bf')" onafterselect="afterSelectProvider(appForm.BfCorporation)" onclick="openProvider();event.returnValue=false;" />
+            <item type="text" field="BfCorporation" title="签字人" createapi="1" updateapi="1">
+              <attribute />
+            </item>
+            <item type="blank" colspan="2" height="10" />
+            <item type="select" field="Htproperty" title="合同性质" onchange="doHtxzChg()">
+              <option value="" />
+              <option value="直接合同">直接合同</option>
+              <option value="三方合同">三方合同</option>
+              <option value="补充合同">补充合同</option>
+            </item>
+            <item type="radio" field="IfDdhs" title="是否单独执行" defaultvalue="1" createapi="0" updateapi="0" onclick="doDdhsClick(appForm.IfDdhs.value,this.value)">
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </item>
+            <item type="lookup" title="主合同名称" field="MasterContractGUID" textfield="MasterContractName" icon="/_imgs/ico_16_1071.gif" detailpage="/CBGL/HTZX/HtAllInfo_Edit.aspx?mode=3&amp;ModuleName=合同信息&amp;oid=" createapi="1" updateapi="1" defaultvalue="" defaulttext="" lookupstyle="single" lookupclass="lionel" lookupbrowse="0" lookupcustom="" features="dialogWidth:700px;dialogHeight:500px;resizable:yes;center:yes;status:no;help:no;scroll:no;" onbeforeselect="beforeSelectContract()" onafterselect="afterSelectContract()" />
+            <item type="select" field="HtKind" title="合同细类" createapi="1" updateapi="1">
+              <option value="" />
+              <option value="其它类">其它类</option>
+              <option value="工程类">工程类</option>
+              <option value="采购类">甲供材采购类</option>
+            </item>
+            <item type="number" field="TotalAmount" title="合同金额" format="#,##0.00" createapi="1" updateapi="1">
+              <attribute maxlength="" min="-99999999999" max="99999999999" grp="true" acc="2" dt="" onreturnvaluechange="calHtAmount()" />
+            </item>
+            <item type="number" field="BjcbAmount" title="不计成本金额" format="#,##0.00" createapi="1" updateapi="1">
+              <attribute maxlength="" min="-99999999999" max="99999999999" grp="true" acc="2" dt="" onreturnvaluechange="calHtAmount()" />
+            </item>
+            <item type="number" field="ItemAmount" title="甲供材金额" format="#,##0.00" createapi="1" updateapi="1">
+              <attribute min="-99999999999" max="99999999999" grp="true" acc="2" dt="" onreturnvaluechange="calHtAmount()" />
+            </item>
+            <item type="number" field="HtAmount_Bz" title="有效签约金额" format="#,##0.00" createapi="0" updateapi="0">
+              <attribute maxlength="" min="-99999999999" max="99999999999" grp="true" acc="2" dt="" />
+            </item>
+            <item type="datetime" field="SignDate" title="签约日期" time="0" createapi="1" updateapi="1">
+              <attribute onreturnvaluechange="ChgSignDate()" />
+            </item>
+            <item type="number" field="HtAmount" title="有效签约金额(￥)" format="#,##0.00" createapi="0" updateapi="0">
+              <attribute min="-99999999999" max="99999999999" grp="true" acc="2" dt="" />
+            </item>
+            <item type="select" name="appForm_ProjType1" field="ProjType" title="所属项目类型" req="0" createapi="0" updateapi="0" onchange="ChageProjType(this.value,false)">
+              <option value="单项目">单项目</option>
+              <option value="多项目">多项目</option>
+              <option value="无项目">无项目</option>
+              <option value="公司库存">公司库存</option>
+            </item>
+            <item type="text" name="appForm_ProjectNameList1" field="ProjectNameList" title="所属项目" createapi="1" updateapi="1" assistanticon="/_imgs/btn_off_lookup.gif" iconalign="right" iconwidth="25" iconclick="ChgProject()" />
+            <item type="radio" field="isUseYgAmount" title="是否使用预估变更" defaultvalue="1" createapi="1" updateapi="0">
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </item>
+          </section>
+        </tab>
+      </form>
+    </control>
+  </controls>
+</page>
