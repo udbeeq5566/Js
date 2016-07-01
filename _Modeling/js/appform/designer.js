@@ -56,7 +56,6 @@ define(function (require, exports, module) {
     //Array 排序
     ns.by = function (name) {
         return function (o, p) {
-d
         rightDesigner.setData(appFormJson);
         rightDesigner.init();
     };
