@@ -56,7 +56,14 @@ define(function (require, exports, module) {
     //Array 排序
     ns.by = function (name) {
         return function (o, p) {
-            var a, b;
+        rightDesigner.setData(appFormJson);
+        rightDesigner.init();
+    };
+
+    //Array 排序
+    ns.by = function (name) {
+        return function (o, p) {
+            var a, b, c;
             if (typeof o === 'object' && typeof p === 'object' && o && p) {
                 a = o[name];
                 b = p[name];
